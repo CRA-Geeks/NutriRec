@@ -1,0 +1,33 @@
+ .partOne {
+ background-image: url('https://i.pinimg.com/474x/2a/a3/75/2aa3757db4f8947879f5c064a223b003.jpg');
+}
+
+.bt , .cardHeader{
+    font-family: 'Julius Sans One', sans-serif;
+}
+.hr {
+    border: none;
+    height: 10px;
+    /* Set the hr color */
+    color:rgb(247, 149, 217) ; /* old IE */
+    background-color: rgb(247, 149, 217); /* Modern Browsers */
+}
+
+.span {
+    font-size: x-large;
+
+}
+.para{
+    display: inline;
+}
+
+.span{
+    /* float: right; */
+    font-size: x-large;
+}
+
+.footer{
+    text-align: center;
+}
+
+
