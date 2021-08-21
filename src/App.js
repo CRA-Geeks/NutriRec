@@ -1,7 +1,16 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
+import HeaderPart from './components/Header';
 
-export default class App extends Component {
+ class App extends Component {
   render() {
-    return <div>Hello from initial commit</div>;
+    return (
+      <div>
+         <HeaderPart />
+      </div>
+    )
   }
 }
+
+export default App;
+
+
