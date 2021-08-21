@@ -1,0 +1,21 @@
+.textCol {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  align-items: baseline;
+}
+
+.row img {
+  width: 100%;
+}
+
+.row section {
+  display: grid;
+  gap: 10px;
+}
+
+.row span {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
