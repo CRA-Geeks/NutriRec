@@ -1,35 +1,28 @@
 @import url("https://fonts.googleapis.com/css2?family=Rampart+One&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;1,700&family=Rampart+One&display=swap");
 
-.head {
+/* .head {
   display: flex;
-}
+} */
 .firstParagraph {
   display: flex;
-  margin: 3% auto;
+  justify-content: space-around;
+  align-items: center;
+  gap: 10px;
+}
+
+p.paragraphShow {
+  margin: 0;
 }
 h1 {
   font-family: "Rampart One", cursive;
 }
-h4 {
-  width: 15rem;
-  margin-left: 15px;
-}
 
-.firstRow h2 {
-  font-family: "Merriweather", serif;
-  font-weight: 900;
-  font-size: 2rem;
-  margin-left: 15%;
-  margin-top: 3%;
-}
-.paragraphShow {
-  margin-top: 5%;
-  font-weight: 600;
-  font-size: 1.5rem;
-}
 .firstRow {
-  margin: 2% 0;
+  display: flex;
+  justify-content: space-between;
+  flex-basis: auto;
+  align-items: center;
 }
 .secondeRow {
   text-align: center;
@@ -73,7 +66,6 @@ h4 {
   gap: 3%;
   padding: 10px;
   justify-content: center;
- 
 }
 .arrow {
   font-size: 2rem;
@@ -101,4 +93,3 @@ h4 {
 #inputGroup-sizing-lg :hover {
   background-color: #571a0a;
 }
-

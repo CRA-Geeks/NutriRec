@@ -8,24 +8,23 @@ import {
   Container,
 } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "./newRecipes.css";
+import "../styles/newRecipes.css";
 import { FaLongArrowAltRight } from "react-icons/fa";
 
 class NewRecipes extends Component {
   render() {
     return (
       <Container>
-        <Row className="firstRow">
-          <Col lg={4}>
+        <Row className="mb-3">
+          <Col className="firstRow">
             <div className="firstParagraph">
               <h1>CRA</h1>
-              <h4>Simple Recipes That Make You Feel Good</h4>
+              <div>
+                <span>Simple Recipes That</span>
+                <span> Make You Feel Good</span>
+              </div>
             </div>
-          </Col>
-          <Col lg={5} sm={12}>
-            <h2>New Recipes</h2>
-          </Col>
-          <Col lg={3}>
+            <h2>NEW RECIPES</h2>
             <p className="paragraphShow">
               show me every things <FaLongArrowAltRight />{" "}
             </p>
@@ -35,7 +34,7 @@ class NewRecipes extends Component {
         <Row className="secondeRow">
           <Col md={6} lg={4} sm={12}>
             <div className="imageFood">
-              <Image src="https://via.placeholder.com/400x500" rounded />
+              <Image src="https://via.placeholder.com/360x540" rounded />
               <div className="circleLinks">
                 <a href="">GF</a>
                 <a href="" className="secondLink">
@@ -56,7 +55,7 @@ class NewRecipes extends Component {
           </Col>
           <Col md={6} lg={4} sm={12}>
             <div className="imageFood">
-              <Image src="https://via.placeholder.com/400x500" rounded />
+              <Image src="https://via.placeholder.com/360x540" rounded />
               <div className="circleLinks">
                 <a href="">GF</a>
                 <a href="" className="secondLink">
@@ -77,7 +76,7 @@ class NewRecipes extends Component {
           </Col>
           <Col md={6} lg={4} sm={12}>
             <div className="imageFood">
-              <Image src="https://via.placeholder.com/400x500" rounded />
+              <Image src="https://via.placeholder.com/360x540" rounded />
               <div className="circleLinks">
                 <a href="">GF</a>
                 <a href="" className="secondLink">
