@@ -1,0 +1,14 @@
+nav a img {
+  width: 30px;
+  height: 30px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+nav a {
+  text-decoration: none;
+}
+
+.navBarIcons {
+  width: fit-content;
+}
