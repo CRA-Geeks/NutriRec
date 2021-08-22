@@ -1,23 +1,28 @@
 import React, { Component } from "react";
-import Header from "./components/Header";
-import NewRecipes from "./components/NewRecipes";
-import RecipeKey from "./components/RecipeKey";
-import RoundUb from "./components/RoundUb";
-import Footer from "./components/Footer";
-import { AboutUs } from "./components/AboutUs";
-import { Container } from "react-bootstrap";
+import Main from "./pages/Main";
+import Recipe from "./pages/Recipe"
+import { BrowserRouter , Switch , Route } from "react-router-dom";
+// import { AboutUs } from "./components/AboutUs";
+// import { Container } from "react-bootstrap";
 export default class App extends Component {
   render() {
     return (
-      <Container>
-        <Header />
-        <main>
-          <NewRecipes />
-          <RecipeKey />
-          <RoundUb />
-        </main>
-        <Footer />
-      </Container>
+   
+      <BrowserRouter>
+      <Switch>
+          <Route exact path='/'>
+            <Main />
+          </Route>
+          <Route exact path='/recipe'>
+            <Recipe/>
+          </Route>
+          <Route exact path='/'>
+            <Main />
+          </Route>
+       </Switch>
+      </BrowserRouter>
+     
+      
       // <AboutUs />
     );
   }
