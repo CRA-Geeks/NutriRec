@@ -11,15 +11,19 @@ import {
 } from "react-bootstrap";
 import { BiSearch } from "react-icons/bi";
 import "../styles/RecipeKey.css";
-import "../styles/search.css"
+import "../styles/search.css";
+
 
 export default class RecipeKey extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      foodInfo: ''
+      foodInfo: '',
     }
   }
+
+
+
 
   handleFoodInfo = (e) => {
     e.preventDefault();
@@ -180,15 +184,18 @@ export default class RecipeKey extends Component {
 
               </InputGroup>
             </form>
-
+            {this.state.foodInfo.calories == 0 && <div class="alert alert-danger" role="alert">
+             there is no data matching your search
+            </div>
+            }
             <ListGroup>
-              <ListGroupItem>{this.state.foodInfo.calories}</ListGroupItem>
-              <ListGroupItem>{this.state.foodInfo.weight}</ListGroupItem>
-              <ListGroupItem>{this.state.foodInfo.suger}</ListGroupItem>
-              <ListGroupItem>{this.state.foodInfo.vegetarian}</ListGroupItem>
-              <ListGroupItem>{this.state.foodInfo.peanut}</ListGroupItem>
-              <ListGroupItem>{this.state.foodInfo.pork}</ListGroupItem>
-              <ListGroupItem>{this.state.foodInfo.alcohol}</ListGroupItem>
+              <ListGroupItem><span>Calories : {this.state.foodInfo.calories}</span></ListGroupItem>
+              <ListGroupItem><span>Weight : {this.state.foodInfo.weight}</span></ListGroupItem>
+              <ListGroupItem><span>Glucose sugar :{this.state.foodInfo.suger}</span></ListGroupItem>
+              <ListGroupItem><span>Vegetarian : {this.state.foodInfo.vegetarian}</span></ListGroupItem>
+              <ListGroupItem><span>Peanut : {this.state.foodInfo.peanut}</span></ListGroupItem>
+              <ListGroupItem><span>Pork : {this.state.foodInfo.pork}</span></ListGroupItem>
+              <ListGroupItem><span>Al-cohol : {this.state.foodInfo.alcohol}</span></ListGroupItem>
             </ListGroup>
 
           </Col>
