@@ -1,0 +1,12 @@
+.navbar-nav {
+  width: 100%;
+}
+
+header a {
+  text-decoration: none !important;
+  background-color: transparent;
+}
+
+header a:hover {
+  background-color: transparent !important;
+}
