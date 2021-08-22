@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "./AboutUs.css";
-export class AboutUs extends Component {
+export class About extends Component {
   render() {
     return (
       <>
@@ -107,4 +107,4 @@ export class AboutUs extends Component {
   }
 }
 
-export default AboutUs;
+export default About;
