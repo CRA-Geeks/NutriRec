@@ -1,13 +1,11 @@
 import React, { Component } from "react";
-import Header from "./components/Header";
-import NewRecipes from "./components/NewRecipes";
-import RecipeKey from "./components/RecipeKey";
-import RoundUb from "./components/RoundUb";
-import Footer from "./components/Footer";
 import AboutUs from "./pages/AboutUs";
 import { Auth0Provider } from "@auth0/auth0-react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import MoreInfo from "./pages/moreInfo";
+import Main from "./pages/Main";
+import Recipe from "./pages/Recipe";
+
 import { withAuth0 } from "@auth0/auth0-react";
 class App extends Component {
   render() {
@@ -19,14 +17,11 @@ class App extends Component {
           redirectUri={window.location.origin}
         >
           <Switch>
-            <Route path="/" exact>
-              <Header />
-              <main>
-                <NewRecipes />
-                <RecipeKey />
-                <RoundUb />
-              </main>
-              <Footer />
+            <Route exact path="/">
+              <Main />
+            </Route>
+            <Route exact path="/recipe">
+              <Recipe />
             </Route>
             <Route path="/info" exact>
               <MoreInfo />
