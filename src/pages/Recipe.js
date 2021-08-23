@@ -36,7 +36,7 @@ export default class Recipe extends Component {
     axios
       .get(`http://localhost:8080/recipe?q=${this.state.recipeName}`)
       .then((res) => {
-        console.log(res);
+        console.log(res.status);
         this.setState({
           showResult: true,
           dataRecipe: res.data.hits,
@@ -44,7 +44,6 @@ export default class Recipe extends Component {
           prevURL: "",
           currentURL: `http://localhost:8080/recipe?q=${this.state.recipeName}`,
         });
-        console.log(this.state.dataRecipe);
       })
       .catch((e) => {
         console.log("error");
@@ -55,7 +54,7 @@ export default class Recipe extends Component {
     axios
       .get(link)
       .then((res) => {
-        console.log(res);
+        console.log(res.status);
         this.setState({
           showResult: true,
           dataRecipe: res.data.hits,
@@ -63,7 +62,6 @@ export default class Recipe extends Component {
           prevURL: this.state.currentURL,
           currentURL: link,
         });
-        console.log(this.state.dataRecipe);
       })
       .catch((e) => {
         console.log("error");

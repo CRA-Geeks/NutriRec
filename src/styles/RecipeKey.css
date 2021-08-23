@@ -18,10 +18,10 @@ a:hover {
 
 .recipeItem {
   display: flex;
-  justify-content: flex-start;
-  gap: 50px;
+  justify-content: space-between;
+  /* gap: 50px; */
   align-items: center;
-  width: max-content;
+  width: 960px;
   cursor: pointer;
 }
 
@@ -32,7 +32,7 @@ a:hover {
 }
 
 .recipeItem img {
-  width: 130px;
+  width: 150px !important;
 }
 
 .recipeItem:hover {

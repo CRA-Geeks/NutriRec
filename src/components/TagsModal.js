@@ -14,15 +14,16 @@ class TagsModal extends Component {
   handleTags = () => {
     let array = [];
     let checkboxes = document.getElementsByTagName("input");
+
     for (let i = 0; i < checkboxes.length; i++) {
       if (checkboxes[i].type === "checkbox" && checkboxes[i].checked) {
         array.push(checkboxes[i].value);
       }
     }
-    console.log(array);
+
     const config = {
       method: "put",
-      baseURL: `http://localhost:8080/${this.props.auth0.user.email}`,
+      baseURL: `http://localhost:8080/user/${this.props.auth0.user.email}`,
       data: {
         tags: array,
       },
@@ -30,7 +31,7 @@ class TagsModal extends Component {
     // @ts-ignore
     axios(config)
       .then((res) => {
-        console.log(res);
+        console.log(res.status);
       })
       .catch((err) => {
         console.log(err);
@@ -38,7 +39,6 @@ class TagsModal extends Component {
   };
 
   render() {
-    console.log(this.props);
     return (
       <Modal show={this.props.show} onHide={this.props.handleClose}>
         <Modal.Header closeButton>

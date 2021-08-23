@@ -15,6 +15,7 @@ class App extends Component {
           domain="dev-0sowatcr.eu.auth0.com"
           clientId="G8q6d9Ixd0caG4pzUW5Qmi2eMKrMSIxO"
           redirectUri={window.location.origin}
+          p
         >
           <Switch>
             <Route exact path="/">
