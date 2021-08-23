@@ -11,6 +11,7 @@ import {
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import axios from "axios";
+import "../styles/recipe.css";
 export default class Recipe extends Component {
   constructor() {
     super();
@@ -20,6 +21,12 @@ export default class Recipe extends Component {
       nextURL: "",
       prevURL: "",
       currentURL: "",
+      colorHalal: "",
+      recipes: [],
+      heathRecipes: [],
+      placeRecipes: [],
+      health:'0',
+      place:'0',
     };
   }
 
@@ -36,17 +43,18 @@ export default class Recipe extends Component {
     axios
       .get(`http://localhost:8080/recipe?q=${this.state.recipeName}`)
       .then((res) => {
-        console.log(res.status);
+        console.log(res.data);
         this.setState({
           showResult: true,
           dataRecipe: res.data.hits,
+          recipes: res.data.hits,
           nextURL: res.data._links.next.href,
           prevURL: "",
           currentURL: `http://localhost:8080/recipe?q=${this.state.recipeName}`,
         });
       })
       .catch((e) => {
-        console.log("error");
+        console.log(e);
       });
   }
 
@@ -58,6 +66,7 @@ export default class Recipe extends Component {
         this.setState({
           showResult: true,
           dataRecipe: res.data.hits,
+          recipes: res.data.hits,
           nextURL: res.data._links.next.href,
           prevURL: this.state.currentURL,
           currentURL: link,
@@ -68,25 +77,101 @@ export default class Recipe extends Component {
       });
   }
 
+  handelBoth (health, place) {
+    let newArray = this.state.recipes.filter((item) =>
+      (
+        item.recipe.healthLabels.includes(health) || health==='0'
+        
+      )&&(item.recipe.cuisineType.includes(place)||place==='0')
+
+    )
+    this.setState({
+      dataRecipe:newArray,
+      health:health,
+      place:place,
+    })
+  };
+
+  // changeHealth(e) {
+  //   if (this.state.placeRecipes.length > 0) {
+  //     let placeArray = this.state.placeRecipes.filter((item) =>
+  //       item.recipe.healthLabels.includes(e.target.value)
+  //     );
+
+  //     this.setState({
+  //       dataRecipe: placeArray,
+  //       heathRecipes: placeArray,
+  //     });
+  //   } else {
+  //     let newArray = this.state.recipes.filter(
+  //       (item) =>
+  //         item.recipe.healthLabels.includes(e.target.value) ||
+  //         e.target.value === "0"
+  //     );
+
+  //     console.log(newArray);
+  //     this.setState({
+  //       dataRecipe: newArray,
+  //       heathRecipes: newArray,
+  //     });
+  //   }
+  // }
+  // changeCuisineType(e) {
+  //   if (this.state.heathRecipes.length > 0) {
+  //     let filterArray = this.state.heathRecipes.filter((item) =>
+  //       item.recipe.cuisineType.includes(e.target.value)
+  //     );
+
+  //     this.setState({
+  //       dataRecipe: filterArray,
+  //       placeRecipes: filterArray,
+  //     });
+  //   } else {
+  //     let newArray = this.state.recipes.filter(
+  //       (item) =>
+  //         item.recipe.cuisineType.includes(e.target.value) ||
+  //         e.target.value === "0"
+  //     );
+
+  //     console.log(newArray);
+  //     this.setState({
+  //       dataRecipe: newArray,
+  //       placeRecipes: newArray,
+  //     });
+  //   }
+  // }
+
   render() {
     return (
       <Container>
         <Header />
-        <main>
-          <Form
-            onSubmit={(e) => this.recipeHandler(e)}
-            style={{ margin: "2rem 0" }}
-          >
+        <main className="recipeMain">
+          <Form className="recipeForm" onSubmit={(e) => this.recipeHandler(e)}>
             <Row>
-              <Col lg={3}></Col>
+              <Col lg={3}>
+                {this.state.showResult && (
+                  <Form.Select
+                    aria-label="Default select example"
+                    size="lg"
+                    onChange={(e) => this.handelBoth(e.target.value,this.state.place)}
+                  >
+                    <option value="0">All Recipes</option>
+                    <option value="Pork-Free">Pork Free</option>
+                    <option value="Alcohol-Free">Alcohol Free</option>
+                    <option value="Sugar-Free">Sugar Free</option>
+                    <option value="Vegan">Vegan</option>
+                    <option value="Vegetarian">Vegetarian</option>
+                    <option value="Gluten-Free">Gluten Free</option>
+                  </Form.Select>
+                )}
+              </Col>
 
               <Col>
-                <InputGroup style={{ border: "3px inset #CCCCCC" }}>
+                <InputGroup className="recipeInputText">
                   <Form.Control
                     type="text"
                     placeholder="Search About Recipe"
                     onChange={(e) => this.changeHandler(e)}
-                    style={{ height: "3.1rem" }}
                   />
 
                   <Button
@@ -99,24 +184,56 @@ export default class Recipe extends Component {
                   </Button>
                 </InputGroup>
               </Col>
-              <Col lg={3}></Col>
+              <Col lg={3}>
+                {this.state.showResult && (
+                  <Form.Select
+                    aria-label="Default select example"
+                    size="lg"
+                    onChange={(e) => this.handelBoth(this.state.health,e.target.value)}
+                  >
+                    <option value="0">All Recipes</option>
+                    <option value="american">american</option>
+                    <option value="british">british</option>
+                    <option value="italian">italian</option>
+                    <option value="french">french</option>
+                    <option value="mediterranean">mediterranean</option>
+                    <option value="europe">europe</option>
+                    <option value="asian">asian</option>
+                    <option value="mexican">mexican</option>
+                  </Form.Select>
+                )}
+              </Col>
             </Row>
           </Form>
 
-          <Row>
+          <Row className="cardRow">
             {this.state.showResult &&
               this.state.dataRecipe.map((item) => {
                 return (
-                  <Col lg={3} md={6} sm={12}>
-                    <Card style={{ width: "18rem", height: "33rem" }}>
+                  <Col lg={3} md={6} sm={12} className="recipeColCard">
+                    <Card className="recipeCard">
                       <Card.Img variant="top" src={item.recipe.image} />
                       <Card.Body>
-                        <Card.Title>{item.recipe.label}</Card.Title>
+                        <Card.Title className="titleText">
+                          <pre>{item.recipe.label}</pre>
+                        </Card.Title>
                         <Card.Text>
-                          cuisineType: {item.recipe.cuisineType}
-                          <br />
-                          calories: {Math.floor(item.recipe.calories)}
-                          <br />
+                          <div className="firstText">
+                            <p className="mainP">
+                              <span className="textItem">cuisineType:</span>{" "}
+                              <span className="textValue">
+                                {item.recipe.cuisineType}
+                              </span>
+                            </p>
+
+                            <p className="mainP">
+                              <span className="textItem">calories:</span>{" "}
+                              <span className="textValue">
+                                {Math.floor(item.recipe.calories)}
+                              </span>
+                            </p>
+                          </div>
+
                           {item.recipe.healthLabels
                             .map((elem) => {
                               let a = 0;
@@ -131,15 +248,15 @@ export default class Recipe extends Component {
                             .reduce(function (a, b) {
                               return a + b;
                             }, 0) === 2 ? (
-                            <p>Halal</p>
+                            <p className="halal">Halal</p>
                           ) : (
-                            <p>Not Halal</p>
+                            <p className="notHalal">Not Halal</p>
                           )}
                         </Card.Text>
                         <a href={item.recipe.url}>
-                          <Button variant="primary">
+                          <Button className="buttonCard" variant="info">
                             Know More About Recipe
-                          </Button>{" "}
+                          </Button>
                         </a>
                       </Card.Body>
                     </Card>
