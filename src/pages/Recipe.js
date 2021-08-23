@@ -75,7 +75,10 @@ export default class Recipe extends Component {
       <Container>
         <Header />
         <main>
-          <Form onSubmit={(e) => this.recipeHandler(e)} style={{margin:"2rem 0"}}>
+          <Form
+            onSubmit={(e) => this.recipeHandler(e)}
+            style={{ margin: "2rem 0" }}
+          >
             <Row>
               <Col lg={3}></Col>
 
