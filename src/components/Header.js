@@ -76,6 +76,9 @@ class Header extends Component {
                 <Nav.Link as={Link} to="/about-us">
                   About
                 </Nav.Link>
+                <Nav.Link as={Link} to="/recipe">
+                  Recipe
+                </Nav.Link>
 
                 {this.props.auth0.isAuthenticated ? (
                   <Button

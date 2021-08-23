@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import AboutUs from "./pages/AboutUs";
 import { Auth0Provider } from "@auth0/auth0-react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
-import MoreInfo from "./pages/moreInfo";
+
 import Main from "./pages/Main";
 import Recipe from "./pages/Recipe";
 
@@ -24,9 +24,7 @@ class App extends Component {
             <Route exact path="/recipe">
               <Recipe />
             </Route>
-            <Route path="/info" exact>
-              <MoreInfo />
-            </Route>
+
             <Route path="/about-us" exact>
               <AboutUs />
             </Route>
