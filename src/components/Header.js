@@ -6,6 +6,9 @@ import "../styles/header.css";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import TagsModal from "./TagsModal";
+
+
+
 class Header extends Component {
   constructor(props) {
     super(props);
@@ -69,13 +72,20 @@ class Header extends Component {
             <Navbar.Collapse id="responsive-navbar-nav">
               <Nav className="justify-content-end">
                 {this.props.auth0.isAuthenticated && (
-                  <Nav.Link onClick={this.handleShowModal}>
+                  <> <Nav.Link onClick={this.handleShowModal}>
                     Key Preferences
                   </Nav.Link>
+                    <Nav.Link as={Link} to="/favlist">
+                      Favorite
+                    </Nav.Link>
+                  </>
                 )}
+
                 <Nav.Link as={Link} to="/about-us">
                   About
                 </Nav.Link>
+                
+               
                 <Nav.Link as={Link} to="/recipe">
                   Recipe
                 </Nav.Link>
