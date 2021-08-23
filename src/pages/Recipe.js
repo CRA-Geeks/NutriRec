@@ -130,7 +130,7 @@ export default class Recipe extends Component {
                             })
                             .reduce(function (a, b) {
                               return a + b;
-                            }) === 2 ? (
+                            }, 0) === 2 ? (
                             <p>Halal</p>
                           ) : (
                             <p>Not Halal</p>
