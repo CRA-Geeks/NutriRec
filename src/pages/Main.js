@@ -12,7 +12,7 @@ export default class Main extends Component {
         <main>
           <NewRecipes />
           <RecipeKey />
-          <RoundUb />
+          {/* <RoundUb /> */}
         </main>
         <Footer />
       </>
