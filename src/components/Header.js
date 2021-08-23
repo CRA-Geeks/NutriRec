@@ -1,39 +1,89 @@
 import React, { Component } from "react";
-import HeaderTop from "./HeaderTop";
-import { Nav, Navbar, Container } from "react-bootstrap";
+// import HeaderTop from "./HeaderTop";
+import { Nav, Navbar, Container, Button } from "react-bootstrap";
+import { withAuth0 } from "@auth0/auth0-react";
 import "../styles/header.css";
+import axios from "axios";
+import { Link } from "react-router-dom";
+import TagsModal from "./TagsModal";
 class Header extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      tagsModalOpen: false,
+    };
+  }
+  componentDidUpdate() {
+    if (this.props.auth0.isAuthenticated) {
+      const config = {
+        method: "post",
+        baseURL: "http://localhost:8080/",
+        url: "/createUser",
+        data: {
+          email: this.props.auth0.user.email,
+          userName: this.props.auth0.user.name,
+        },
+      };
+      // @ts-ignore
+      axios(config)
+        .then(() => {
+          console.log("success");
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  }
+
+  handleShowModal = () => {
+    this.setState({ tagsModalOpen: true });
+  };
+
+  handleClose = () => {
+    this.setState({ tagsModalOpen: false });
+  };
   render() {
     return (
       <header>
         <Container>
-          <HeaderTop />
-          <Navbar
-            style={{ height: "10vw" }}
-            collapseOnSelect
-            expand="lg"
-            bg="info"
-            variant="light"
-          >
+          <TagsModal
+            show={this.state.tagsModalOpen}
+            handleClose={this.handleClose}
+          />
+          <Navbar collapseOnSelect expand="lg" bg="light" variant="light">
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-            <Navbar.Collapse id="responsive-navbar-nav">
-              <Nav className="me-auto">
-                <Nav.Link href="#Vegan">Vegan</Nav.Link>
-                <Nav.Link href="#Gluten-Free">Gluten-Free</Nav.Link>
-                <Nav.Link href="#All Recipes">All Recipes</Nav.Link>
-              </Nav>
-            </Navbar.Collapse>
-            <Navbar.Brand href="#home">
-              <h2>Minimalist Baker</h2>
+
+            <Navbar.Brand as={Link} to="/">
+              <h2>NutriRec</h2>
             </Navbar.Brand>
             <Navbar.Collapse id="responsive-navbar-nav">
               <Nav className="justify-content-end">
-                <Nav.Link href="#About">About</Nav.Link>
-                <Nav.Link eventKey={2} href="#Shop">
-                  Shop
+                {this.props.auth0.isAuthenticated && (
+                  <Nav.Link onClick={this.handleShowModal}>
+                    Key Preferences
+                  </Nav.Link>
+                )}
+                <Nav.Link as={Link} to="/about-us">
+                  About
                 </Nav.Link>
-                <Nav.Link href="#Cookbook">Cookbook</Nav.Link>
-                <Nav.Link href="#Blogger Resources">Blogger Resources</Nav.Link>
+
+                {this.props.auth0.isAuthenticated ? (
+                  <Button
+                    variant="light"
+                    onClick={() => this.props.auth0.logout()}
+                  >
+                    Log Out
+                  </Button>
+                ) : (
+                  <Button
+                    variant="light"
+                    onClick={() => {
+                      this.props.auth0.loginWithRedirect();
+                    }}
+                  >
+                    Log In
+                  </Button>
+                )}
               </Nav>
             </Navbar.Collapse>
           </Navbar>
@@ -44,4 +94,4 @@ class Header extends Component {
   }
 }
 
-export default Header;
+export default withAuth0(Header);
