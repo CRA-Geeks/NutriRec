@@ -12,6 +12,8 @@ import Footer from "../components/Footer";
 import Header from "../components/Header";
 import axios from "axios";
 import { withAuth0 } from "@auth0/auth0-react";
+import TagsModal from "../components/TagsModal";
+
 class Recipe extends Component {
   constructor() {
     super();
@@ -29,6 +31,7 @@ class Recipe extends Component {
       health: "0",
       place: "0",
       favArr: [],
+      tags: [],
       test: false,
     };
   }
@@ -178,14 +181,38 @@ class Recipe extends Component {
         });
     }
   }
+  // arr- user  , arr - rec 
 
   handelBoth(health, place) {
-    let newArray = this.state.recipes.filter(
-      (item) =>
+    
+    let newArray = []
+    if (health === 'your-preferences') {
+      axios
+      .get(`http://localhost:8080/user/${this.props.auth0.user.email}`)
+      .then((response) => {
+       this.setState({
+         tags:response.data.tags,
+       })
+      console.log(this.state.tags)
+      newArray = this.state.recipes.filter((item) => this.state.tags.every((ele) => item.recipe.healthLabels.includes(ele)))
+      console.log(newArray)
+      this.setState({
+        dataRecipe: newArray,
+        health: health,
+        place: place,
+      });
+  
+      });
+     
 
-        (item.recipe.healthLabels.includes(health) || health === "0") &&
-        (item.recipe.cuisineType.includes(place) || place === "0")
-    );
+    } else {
+      newArray = this.state.recipes.filter(
+        (item) =>
+          (item.recipe.healthLabels.includes(health) || health === "0") &&
+          (item.recipe.cuisineType.includes(place) || place === "0")
+      );
+
+    }
     this.setState({
       dataRecipe: newArray,
       health: health,
@@ -243,48 +270,31 @@ class Recipe extends Component {
                   )}
                 </Col>
 
-                <Col>
-                  <InputGroup className="recipeInputText">
-                    <Form.Control
-                      type="text"
-                      placeholder="Search About Recipe"
-                      onChange={(e) => this.changeHandler(e)}
-                    />
-
-                    <Button
-                      variant="info"
-                      type="submit"
-                      size="lg"
-                      style={{ border: "3px outset #CCCCCC" }}
-                    >
-                      Recipes Search
-                    </Button>
-                  </InputGroup>
-                </Col>
-                <Col lg={3}>
-                  {this.state.showResult && (
-                    <Form.Select
-                      aria-label="Default select example"
-                      size="lg"
-                      onChange={(e) =>
-                        // @ts-ignore
-                        this.handelBoth(this.state.health, e.target.value)
-                      }
-                    >
-                      <option value="0">All Recipes</option>
-                      <option value="american">american</option>
-                      <option value="british">british</option>
-                      <option value="italian">italian</option>
-                      <option value="french">french</option>
-                      <option value="mediterranean">mediterranean</option>
-                      <option value="europe">europe</option>
-                      <option value="asian">asian</option>
-                      <option value="mexican">mexican</option>
-                    </Form.Select>
-                  )}
-                </Col>
-              </Row>
-            </Form>
+          <Form
+            onSubmit={(e) => this.recipeHandler(e)}
+            style={{ margin: "2rem 0" }}
+          >
+            <Row>
+              <Col lg={3}>
+                {this.state.showResult && (
+                  <Form.Select
+                    aria-label="Default select example"
+                    size="lg"
+                    onChange={(e) =>
+                      this.handelBoth(e.target.value, this.state.place)
+                    }
+                  >
+                    <option value="0">All Recipes</option>
+                    <option value="your-preferences">Your Preferences</option>
+                    <option value="Pork-Free">Pork Free</option>
+                    <option value="Alcohol-Free">Alcohol Free</option>
+                    <option value="Sugar-Free">Sugar Free</option>
+                    <option value="Vegan">Vegan</option>
+                    <option value="Vegetarian">Vegetarian</option>
+                    <option value="Gluten-Free">Gluten Free</option>
+                  </Form.Select>
+                )}
+              </Col>
 
             <Row className="cardRow">
               {this.state.showResult &&
