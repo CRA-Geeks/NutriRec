@@ -12,6 +12,7 @@ import Footer from "../components/Footer";
 import Header from "../components/Header";
 import axios from "axios";
 import { withAuth0 } from "@auth0/auth0-react";
+import TagsModal from "../components/TagsModal";
 
 class Recipe extends Component {
   constructor() {
@@ -29,6 +30,7 @@ class Recipe extends Component {
       health: "0",
       place: "0",
       favArr: [],
+      tags: [],
     };
   }
 
@@ -123,18 +125,45 @@ class Recipe extends Component {
         console.log("error");
       });
   }
+  // arr- user  , arr - rec 
 
   handelBoth(health, place) {
-    let newArray = this.state.recipes.filter(
-      (item) =>
-        (item.recipe.healthLabels.includes(health) || health === "0") &&
-        (item.recipe.cuisineType.includes(place) || place === "0")
-    );
+    
+    let newArray = []
+    if (health === 'your-preferences') {
+      axios
+      .get(`http://localhost:8080/user/${this.props.auth0.user.email}`)
+      .then((response) => {
+       this.setState({
+         tags:response.data.tags,
+       })
+      console.log(this.state.tags)
+      newArray = this.state.recipes.filter((item) => this.state.tags.every((ele) => item.recipe.healthLabels.includes(ele)))
+      console.log(newArray)
+      this.setState({
+        dataRecipe: newArray,
+        health: health,
+        place: place,
+      });
+  
+      });
+     
+
+    } else {
+      newArray = this.state.recipes.filter(
+        (item) =>
+          (item.recipe.healthLabels.includes(health) || health === "0") &&
+          (item.recipe.cuisineType.includes(place) || place === "0")
+      );
+
+    }
     this.setState({
       dataRecipe: newArray,
       health: health,
       place: place,
     });
+
+
   }
 
   render() {
@@ -160,6 +189,7 @@ class Recipe extends Component {
                     }
                   >
                     <option value="0">All Recipes</option>
+                    <option value="your-preferences">Your Preferences</option>
                     <option value="Pork-Free">Pork Free</option>
                     <option value="Alcohol-Free">Alcohol Free</option>
                     <option value="Sugar-Free">Sugar Free</option>

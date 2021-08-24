@@ -32,6 +32,7 @@ class TagsModal extends Component {
     axios(config)
       .then((res) => {
         console.log(res.status);
+        this.props.handleClose();
       })
       .catch((err) => {
         console.log(err);
@@ -46,17 +47,17 @@ class TagsModal extends Component {
         </Modal.Header>
         <Form>
           <Modal.Body id="chech">
-            <Form.Check inline value="pork" label="Pork Free" id="pork" />
+            <Form.Check inline value="Pork-Free" label="Pork Free" id="pork" />
             <Form.Check
               inline
-              value="alcohol"
+              value="Alcohol-Free"
               label="Alcohol Free"
               id="alcohol"
             />
-            <Form.Check inline value="sugar" label="Sugar Free" />
-            <Form.Check inline value="vegan" label="Vegan" />
-            <Form.Check inline value="vegetarian" label="Vegetarian" />
-            <Form.Check inline value="gluten" label="Gluten Free" />
+            <Form.Check inline value="Sugar-Free" label="Sugar Free" />
+            <Form.Check inline value="Vegan" label="Vegan" />
+            <Form.Check inline value="Vegetarian" label="Vegetarian" />
+            <Form.Check inline value="Gluten-Free" label="Gluten Free" />
           </Modal.Body>
           <Modal.Footer>
             <Button variant="danger" onClick={this.props.handleClose}>
