@@ -247,7 +247,9 @@ class Recipe extends Component {
                       }
                     >
                       <option value="0">All Recipes</option>
-                      <option value="your-preferences">Your Preferences</option>
+                      {this.props.auth0.isAuthenticated&&
+                      <option value="your-preferences">Your Preferences</option>}
+                      
                       <option value="Pork-Free">Pork Free</option>
                       <option value="Alcohol-Free">Alcohol Free</option>
                       <option value="Sugar-Free">Sugar Free</option>
