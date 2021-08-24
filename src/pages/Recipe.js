@@ -17,6 +17,7 @@ class Recipe extends Component {
     super();
     this.state = {
       recipeName: "",
+      dataRecipe: [],
       showResult: false,
       nextURL: "",
       prevURL: "",
@@ -181,6 +182,7 @@ class Recipe extends Component {
   handelBoth(health, place) {
     let newArray = this.state.recipes.filter(
       (item) =>
+
         (item.recipe.healthLabels.includes(health) || health === "0") &&
         (item.recipe.cuisineType.includes(place) || place === "0")
     );
@@ -200,6 +202,7 @@ class Recipe extends Component {
         });
     }
   }
+
 
   render() {
     console.log(this.state.favArr);
@@ -408,7 +411,127 @@ class Recipe extends Component {
                 )}
               </div>
             </Row>
-          </Container>
+          </Form>
+
+          <Row className="cardRow">
+            {this.state.showResult &&
+              this.state.dataRecipe.map((item) => {
+                return (
+                  <Col lg={3} md={6} sm={12} className="recipeColCard">
+                    <Card className="recipeCard" style={{marginTop:'20px'}}>
+                      <Card.Img variant="top" src={item.recipe.image} />
+                      <Card.Body style={{overflow:'auto',height:'240px'}}>
+                        <Card.Title className="titleText">
+                          <pre>{item.recipe.label}</pre>
+                        </Card.Title>
+                        <Card.Text>
+                          <div className="firstText">
+                            <p className="mainP">
+                              <span className="textItem">cuisineType:</span>{" "}
+                              <span className="textValue">
+                                {item.recipe.cuisineType}
+                              </span>
+                            </p>
+
+                            <p className="mainP">
+                              <span className="textItem">calories:</span>{" "}
+                              <span className="textValue">
+                                {Math.floor(item.recipe.calories)}
+                              </span>
+                            </p>
+                            {item.recipe.totalTime===0?<p className="mainP">
+                              <span className="textItem">totalTime:</span>{" "}
+                              <span className="textValue">
+                                Not available
+                              </span>
+                            </p>: <p className="mainP">
+                              <span className="textItem">totalTime:</span>{" "}
+                              <span className="textValue">
+                                {Math.floor(item.recipe.totalTime)} Min
+                              </span>
+                            </p>}
+
+
+
+                          </div>
+
+                          {item.recipe.healthLabels
+                            .map((elem) => {
+                              let a = 0;
+                              if (elem === "Pork-Free") {
+                                a++;
+                              }
+                              if (elem === "Alcohol-Free") {
+                                a++;
+                              }
+                              return a === 1 && 1;
+                            })
+                            .reduce(function (a, b) {
+                              return a + b;
+                            }, 0) === 2 ? (
+                            <p className="halal">Halal</p>
+                          ) : (
+                            <p className="notHalal">Not Halal</p>
+                          )}
+                        </Card.Text>
+                
+                      </Card.Body>
+                      <Card.Footer style={{display:'flex',gap:'5px'}} >
+                      <Button href={item.recipe.url} className="buttonCard"
+                              variant="success">Know More About Recipe</Button> {' '}
+                       
+                        {this.props.auth0.isAuthenticated && (
+                          <Button
+                            onClick={() => this.addtofav(item.recipe)}
+                            id="myBtn"
+                          >
+                            Add to favlist
+                          </Button>
+                        )}
+                       
+                        </Card.Footer>
+                    </Card>
+                  </Col>
+                );
+              })}{" "}
+          </Row>
+          <Row>
+            <div
+              style={{
+                display: "flex",
+                width: "50%",
+                justifyContent: "space-between",
+                margin: "3rem auto",
+              }}
+            >
+              {this.state.prevURL && (
+                <Button
+                  variant="secondary"
+                  style={{
+                    borderTopLeftRadius: "50%",
+                    borderBottomLeftRadius: "50%",
+                    border: "3px outset #0DCAF0",
+                  }}
+                  onClick={() => this.pageHandel(this.state.prevURL)}
+                >
+                  Prev Page
+                </Button>
+              )}
+              {this.state.nextURL && (
+                <Button
+                  variant="secondary"
+                  style={{
+                    borderTopRightRadius: "50%",
+                    borderBottomRightRadius: "50%",
+                    border: "3px outset #0DCAF0",
+                  }}
+                  onClick={() => this.pageHandel(this.state.nextURL)}
+                >
+                  Next Page
+                </Button>
+              )}
+            </div>
+          </Row>
         </main>
         <Footer />
         {/* </Container> */}
