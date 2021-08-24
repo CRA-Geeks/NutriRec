@@ -1,0 +1,57 @@
+
+
+.recipeForm{
+     margin: 2rem 0;
+}
+
+.recipeInputText{
+     border: 3px inset #CCCCCC ;
+}
+.recipeColCard{
+    text-align: center;
+    margin: 1rem auto;
+}
+.recipeCard{
+   width: 18rem;
+   height: 33rem;
+   
+}
+
+.recipeCard a{
+    background-color: white !important;
+    padding: 0 !important;
+}
+.mainP{
+    display: flex;
+    margin: 0;
+    gap: 5px;
+}
+.textItem{
+    font-size: 17px;
+    font-weight: 600;
+
+}
+
+.textValue{
+    font-size: 17px;
+    color: rgb(124, 118, 124);
+    font-weight: 600;
+
+}
+
+.halal{
+    color: yellowgreen;
+    font-size: 1.5rem;
+}
+.notHalal{
+    color: tomato;
+    font-size: 1.5rem;
+}
+.mainP{
+    height: 2rem;
+}
+.titleText{
+ height: 3rem;
+ font-size: 1.5rem;
+}
+
