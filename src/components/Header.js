@@ -75,9 +75,13 @@ class Header extends Component {
             <Navbar.Collapse id="responsive-navbar-nav">
               <Nav className="justify-content-end">
                 {this.props.auth0.isAuthenticated && (
-                  <Nav.Link onClick={this.handleShowModal}>
+                  <> <Nav.Link onClick={this.handleShowModal}>
                     Key Preferences
                   </Nav.Link>
+                    <Nav.Link as={Link} to="/favlist">
+                      Favorite
+                    </Nav.Link>
+                  </>
                 )}
                 <Nav.Link
                   onClick={() => {
@@ -89,6 +93,8 @@ class Header extends Component {
                 <Nav.Link as={Link} to="/about-us">
                   About
                 </Nav.Link>
+                
+               
                 <Nav.Link as={Link} to="/recipe">
                   Recipe
                 </Nav.Link>

@@ -7,6 +7,7 @@ import Recipe from "./pages/Recipe";
 import { withAuth0 } from "@auth0/auth0-react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./styles/style.sass";
+import FavList from "./pages/FavList";
 class App extends Component {
   render() {
     return (
@@ -21,8 +22,13 @@ class App extends Component {
             <Route exact path="/">
               <Main />
             </Route>
+          
+            
             <Route exact path="/recipe">
               <Recipe />
+            </Route>
+            <Route exact path="/favlist">
+              <FavList />
             </Route>
 
             <Route path="/about-us" exact>

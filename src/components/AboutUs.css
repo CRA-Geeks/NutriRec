@@ -1,10 +1,30 @@
-/* @import url("https://fonts.googleapis.com/css2?family=Caveat:wght@700&display=swap");
 
-.imgesss {
-  background-image: url("https://i.pinimg.com/originals/90/3f/3c/903f3c6c6152a03d598c5da989ea5a36.gif");
-  height: 300px;
+
+.container .aboutUsIcons a:hover {
+  text-decoration: none;
 }
 
-.head {
-  font-family: "Caveat", cursive;
-} */
+div.show-image {
+  position: relative;
+  float: left;
+  margin: 5px;
+}
+
+div.show-image:hover img {
+  opacity: 0.5;
+}
+
+div.show-image:hover nav {
+  display: block;
+}
+
+div.show-image nav {
+  position: absolute;
+  display: none;
+}
+
+div.show-image nav.aboutUsIcons {
+  bottom: 0;
+  left: 0;
+}
+
