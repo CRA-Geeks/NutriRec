@@ -10,9 +10,7 @@ export default class Main extends Component {
     return (
       <>
         <Header />
-       
         <main>
-        
           <NewRecipes />
           <RecipeKey />
           {/* <RoundUb /> */}
