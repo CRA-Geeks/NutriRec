@@ -1,15 +1,8 @@
 import React, { Component } from "react";
-import {
-  Image,
-  Row,
-  Col,
-  InputGroup,
-  FormControl,
-  Container,
-} from "react-bootstrap";
+import { Image, Row, Col, Badge, Container } from "react-bootstrap";
 
 // import "../styles/newRecipes.css";
-import { FaLongArrowAltRight } from "react-icons/fa";
+//import { FaLongArrowAltRight } from "react-icons/fa";
 import axios from "axios";
 class NewRecipes extends Component {
   constructor() {
@@ -77,16 +70,19 @@ class NewRecipes extends Component {
               image: this.state.newRecipe[this.state.firstIndex],
               text: res.data.hits[this.state.firstIndex].recipe.label,
               link: res.data.hits[this.state.firstIndex].recipe.url,
+              label: res.data.hits[this.state.firstIndex].recipe.healthLabels,
             },
             {
               image: this.state.newRecipe[this.state.secondIndex],
               text: res.data.hits[this.state.secondIndex].recipe.label,
               link: res.data.hits[this.state.secondIndex].recipe.url,
+              label: res.data.hits[this.state.secondIndex].recipe.healthLabels,
             },
             {
               image: this.state.newRecipe[this.state.thirdIndex],
               text: res.data.hits[this.state.thirdIndex].recipe.label,
               link: res.data.hits[this.state.thirdIndex].recipe.url,
+              label: res.data.hits[this.state.thirdIndex].recipe.healthLabels,
             },
           ],
         });
@@ -126,7 +122,41 @@ class NewRecipes extends Component {
                   onClick={() => window.open(item.link, "_blank")}
                 />
                 <div className="imgAndText-text">
-                  <h4>{item.text}</h4>
+                  <h4 style={{ height: "3rem" }}>{item.text}</h4>
+                </div>
+                <div style={{ display: "flex", gap: "1rem" }}>
+                {item.label.includes("Pork-Free") &&
+                    item.label.includes("Alcohol-Free") && (
+                      <p>
+                        <Badge bg="success">Halal</Badge>
+                      </p>
+                    )}
+                  
+                  {item.label.includes("Pork-Free") && (
+                    <p>
+                      <Badge bg="danger">PF</Badge>
+                    </p>
+                  )}
+                  {item.label.includes("Alcohol-Free") && (
+                    <p>
+                      <Badge bg="primary">Al</Badge>
+                    </p>
+                  )}
+                  {item.label.includes("Sugar-Free") && (
+                    <p>
+                      <Badge bg="info">NS</Badge>
+                    </p>
+                  )}
+                  {item.label.includes("Vegan") && (
+                    <p>
+                      <Badge bg="success">V</Badge>
+                    </p>
+                  )}
+                  {item.label.includes("Vegetarian") && (
+                    <p>
+                      <Badge bg="warning">Ve</Badge>
+                    </p>
+                  )}
                 </div>
               </div>
             </Col>

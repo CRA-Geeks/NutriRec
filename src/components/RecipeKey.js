@@ -85,14 +85,20 @@ export default class RecipeKey extends Component {
             {
               img: this.state.newRecipe[this.state.firstIndex],
               text: res.data.hits[this.state.firstIndex].recipe.label,
+              link: res.data.hits[this.state.firstIndex].recipe.url,
+              label: res.data.hits[this.state.firstIndex].recipe.healthLabels,
             },
             {
               img: this.state.newRecipe[this.state.secondIndex],
               text: res.data.hits[this.state.secondIndex].recipe.label,
+              link: res.data.hits[this.state.secondIndex].recipe.url,
+              label: res.data.hits[this.state.secondIndex].recipe.healthLabels,
             },
             {
               img: this.state.newRecipe[this.state.thirdIndex],
               text: res.data.hits[this.state.thirdIndex].recipe.label,
+              link: res.data.hits[this.state.thirdIndex].recipe.url,
+              label: res.data.hits[this.state.thirdIndex].recipe.healthLabels,
             },
           ],
         });
@@ -125,7 +131,7 @@ export default class RecipeKey extends Component {
           </Col>
           <Col lg={2} md={4} sm={6} xs={12}>
             <h4>
-              Pork-free <Badge bg="danger">Pork</Badge>
+              Pork-free <Badge bg="danger">PF</Badge>
             </h4>
           </Col>
           <Col lg={2} md={4} sm={6} xs={12}>
@@ -145,10 +151,48 @@ export default class RecipeKey extends Component {
           {this.state.roundArr.map((item, index) => {
             // console.log(item);
             return (
-              <Col lg={8} key={index} className="recipeItem m-2">
+              <Col lg={8} key={index} className="recipeItem m-2" 
+              onClick={() => window.open(item.link, "_blank")}
+              >
                 <img src={item.img} alt={item.text} />
+                
                 <h4> {index + 1} </h4>
-                <h4> {item.text} </h4>
+
+                <h4 style={{ width: "35rem" }}> {item.text} </h4>
+                <div>
+                  {item.label.includes("Pork-Free") &&
+                    item.label.includes("Alcohol-Free") && (
+                      <p>
+                        <Badge bg="success">Halal</Badge>
+                      </p>
+                    )}
+
+                  {item.label.includes("Pork-Free") && (
+                    <p>
+                      <Badge bg="danger">PF</Badge>
+                    </p>
+                  )}
+                  {item.label.includes("Alcohol-Free") && (
+                    <p>
+                      <Badge bg="primary">Al</Badge>
+                    </p>
+                  )}
+                  {item.label.includes("Sugar-Free") && (
+                    <p>
+                      <Badge bg="info">NS</Badge>
+                    </p>
+                  )}
+                  {item.label.includes("Vegan") && (
+                    <p>
+                      <Badge bg="success">V</Badge>
+                    </p>
+                  )}
+                  {item.label.includes("Vegetarian") && (
+                    <p>
+                      <Badge bg="warning">Ve</Badge>
+                    </p>
+                  )}
+                </div>
                 <span>
                   {/* {item.healthLabels.map((label) => {
                     return (

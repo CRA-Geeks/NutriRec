@@ -93,3 +93,7 @@ h1 {
 #inputGroup-sizing-lg :hover {
   background-color: #571a0a;
 }
+
+.recipeKeys{
+  display: flex;
+}
