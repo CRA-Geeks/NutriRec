@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import { Image, Row, Col, Badge, Container } from "react-bootstrap";
 
-// import "../styles/newRecipes.css";
-//import { FaLongArrowAltRight } from "react-icons/fa";
 import axios from "axios";
 class NewRecipes extends Component {
   constructor() {
@@ -31,12 +29,11 @@ class NewRecipes extends Component {
     axios
       .get(`http://localhost:8080/recipe?q=new`)
       .then((res) => {
-        // console.log(res.data.hits[0].recipe.url);
         this.setState({
           newRecipe: res.data.hits.map((item) => item.recipe.image),
           links: res.data.hits.map((item) => item.recipe.url),
         });
-        console.log(this.state.links);
+
         do {
           this.setState({
             firstIndex: this.getRandomNumber(
@@ -57,7 +54,7 @@ class NewRecipes extends Component {
           this.state.firstIndex === this.state.thirdIndex ||
           this.state.secondIndex === this.state.thirdIndex
         );
-        // console.log(this.state.newRecipe);
+
         this.setState({
           // firstImage: this.state.newRecipe[this.state.firstIndex],
           // secondImage: this.state.newRecipe[this.state.secondIndex],
@@ -125,13 +122,13 @@ class NewRecipes extends Component {
                   <h4 style={{ height: "3rem" }}>{item.text}</h4>
                 </div>
                 <div style={{ display: "flex", gap: "1rem" }}>
-                {item.label.includes("Pork-Free") &&
+                  {item.label.includes("Pork-Free") &&
                     item.label.includes("Alcohol-Free") && (
                       <p>
                         <Badge bg="success">Halal</Badge>
                       </p>
                     )}
-                  
+
                   {item.label.includes("Pork-Free") && (
                     <p>
                       <Badge bg="danger">PF</Badge>

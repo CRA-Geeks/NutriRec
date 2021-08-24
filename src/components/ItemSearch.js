@@ -1,7 +1,6 @@
 import axios from "axios";
 import {
   Modal,
-  InputGroup,
   FormControl,
   Button,
   ListGroupItem,
@@ -27,7 +26,7 @@ export default class ItemSearch extends Component {
       .get(url)
       .then((res) => {
         let data = res.data;
-        console.log(data);
+
         this.setState({
           foodInfo: data,
         });

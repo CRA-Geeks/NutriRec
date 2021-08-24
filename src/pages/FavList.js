@@ -13,7 +13,6 @@ export class FavList extends Component {
     };
   }
   componentDidMount = () => {
-    console.log("hello");
     if (this.props.auth0.isAuthenticated) {
       let url = `http://localhost:8080/user/${this.props.auth0.user.email}`;
       axios
@@ -28,22 +27,7 @@ export class FavList extends Component {
         });
     }
   };
-  // componentDidUpdate = () => {
-  //   console.log("hello");
-  //   if (this.props.auth0.isAuthenticated) {
-  //     let url = `http://localhost:8080/user/${this.props.auth0.user.email}`;
-  //     axios
-  //       .get(url)
-  //       .then((res) => {
-  //         this.setState({
-  //           favArr: res.data.favorite,
-  //         });
-  //       })
-  //       .catch((error) => {
-  //         console.error(error);
-  //       });
-  //   }
-  // };
+
   removeFav(obj, e) {
     let newArr = this.state.favArr;
     for (let i = 0; i < newArr.length; i++) {
@@ -84,18 +68,25 @@ export class FavList extends Component {
                         <Card.Img variant="top" src={item.image} alt=".." />
                         <Card.Body>
                           <Card.Title>{item.label}</Card.Title>
-                          <a href={item.url} target="_blank" rel="noreferrer">
-                            <Button variant="primary">
-                              Know More About Recipe
-                            </Button>
-                          </a>
+                        </Card.Body>
+                        <Card.Footer style={{ display: "flex", gap: "5px" }}>
+                          {/* <a href={item.url} target="_blank" rel="noreferrer"> */}
+                          <Button
+                            variant="primary"
+                            href={item.url}
+                            target="_blank"
+                            className="buttonCard"
+                          >
+                            Know More About Recipe
+                          </Button>
+                          {/* </a> */}
                           <Button
                             variant="danger"
                             onClick={(e) => this.removeFav(item, e)}
                           >
                             Delete
                           </Button>
-                        </Card.Body>
+                        </Card.Footer>
                       </Card>
                     </Col>
                   );

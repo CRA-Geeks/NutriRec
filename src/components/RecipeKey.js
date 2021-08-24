@@ -1,18 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
-import { ListGroup, ListGroupItem } from "react-bootstrap";
-import {
-  InputGroup,
-  Button,
-  FormControl,
-  Row,
-  Col,
-  Container,
-  Badge,
-} from "react-bootstrap";
-import { BiSearch } from "react-icons/bi";
-// import "../styles/RecipeKey.css";
-// import "../styles/search.css";
+
+import { Row, Col, Container, Badge } from "react-bootstrap";
 
 export default class RecipeKey extends Component {
   constructor() {
@@ -44,7 +33,6 @@ export default class RecipeKey extends Component {
     axios
       .get(`http://localhost:8080/recipe?q=all`)
       .then((res) => {
-        console.log(res.data.hits[0].recipe);
         this.setState({
           newRecipe: res.data.hits.map((item) => item.recipe.image),
         });
@@ -149,13 +137,15 @@ export default class RecipeKey extends Component {
         <Row className="roundUp">
           <h2>MOST POPULAR RECIPES</h2>
           {this.state.roundArr.map((item, index) => {
-            // console.log(item);
             return (
-              <Col lg={8} key={index} className="recipeItem m-2" 
-              onClick={() => window.open(item.link, "_blank")}
+              <Col
+                lg={8}
+                key={index}
+                className="recipeItem m-2"
+                onClick={() => window.open(item.link, "_blank")}
               >
                 <img src={item.img} alt={item.text} />
-                
+
                 <h4> {index + 1} </h4>
 
                 <h4 style={{ width: "35rem" }}> {item.text} </h4>

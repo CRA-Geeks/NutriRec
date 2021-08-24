@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
 import { withAuth0 } from "@auth0/auth0-react";
+import Swal from "sweetalert2";
 import axios from "axios";
 
 class TagsModal extends Component {
@@ -31,11 +32,16 @@ class TagsModal extends Component {
     // @ts-ignore
     axios(config)
       .then((res) => {
-        console.log(res.status);
+        Swal.fire("Good job!", "Your Preferences are saved ", "success");
         this.props.handleClose();
       })
       .catch((err) => {
         console.log(err);
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Something went wrong!",
+        });
       });
   };
 
@@ -57,7 +63,6 @@ class TagsModal extends Component {
             <Form.Check inline value="Sugar-Free" label="Sugar Free" />
             <Form.Check inline value="Vegan" label="Vegan" />
             <Form.Check inline value="Vegetarian" label="Vegetarian" />
-            <Form.Check inline value="Gluten-Free" label="Gluten Free" />
           </Modal.Body>
           <Modal.Footer>
             <Button variant="danger" onClick={this.props.handleClose}>
