@@ -49,7 +49,7 @@ class Recipe extends Component {
     newArr.push(obj);
     const config = {
       method: "put",
-      baseURL: `http://localhost:8080/addFiv/${this.props.auth0.user.email}`,
+      baseURL: `https://nutrirec-cra.herokuapp.com/addFiv/${this.props.auth0.user.email}`,
       data: {
         favorite: newArr,
       },
@@ -86,7 +86,7 @@ class Recipe extends Component {
     });
     const config = {
       method: "put",
-      baseURL: `http://localhost:8080/addFiv/${this.props.auth0.user.email}`,
+      baseURL: `https://nutrirec-cra.herokuapp.com/addFiv/${this.props.auth0.user.email}`,
       data: {
         favorite: newArr,
       },
@@ -101,7 +101,9 @@ class Recipe extends Component {
     e.preventDefault();
 
     axios
-      .get(`http://localhost:8080/recipe?q=${this.state.recipeName}`)
+      .get(
+        `https://nutrirec-cra.herokuapp.com/recipe?q=${this.state.recipeName}`
+      )
       .then((res) => {
         for (let i = 0; i < res.data.hits.length; i++) {
           if (
@@ -120,7 +122,7 @@ class Recipe extends Component {
           recipes: res.data.hits,
           nextURL: res.data._links.next.href,
           prevURL: "",
-          currentURL: `http://localhost:8080/recipe?q=${this.state.recipeName}`,
+          currentURL: `https://nutrirec-cra.herokuapp.com/recipe?q=${this.state.recipeName}`,
         });
       })
       .catch((e) => {
@@ -128,7 +130,9 @@ class Recipe extends Component {
       });
     if (this.props.auth0.isAuthenticated) {
       axios
-        .get(`http://localhost:8080/user/${this.props.auth0.user.email}`)
+        .get(
+          `https://nutrirec-cra.herokuapp.com/user/${this.props.auth0.user.email}`
+        )
         .then((response) => {
           this.setState({ favArr: response.data.favorite });
         })
@@ -158,7 +162,9 @@ class Recipe extends Component {
       });
     if (this.props.auth0.isAuthenticated) {
       axios
-        .get(`http://localhost:8080/user/${this.props.auth0.user.email}`)
+        .get(
+          `https://nutrirec-cra.herokuapp.com/user/${this.props.auth0.user.email}`
+        )
         .then((response) => {
           this.setState({ favArr: response.data.favorite });
         })
@@ -173,7 +179,9 @@ class Recipe extends Component {
     let newArray = [];
     if (health === "your-preferences") {
       axios
-        .get(`http://localhost:8080/user/${this.props.auth0.user.email}`)
+        .get(
+          `https://nutrirec-cra.herokuapp.com/user/${this.props.auth0.user.email}`
+        )
         .then((response) => {
           this.setState({
             tags: response.data.tags,
@@ -205,7 +213,9 @@ class Recipe extends Component {
     });
     if (this.props.auth0.isAuthenticated) {
       axios
-        .get(`http://localhost:8080/user/${this.props.auth0.user.email}`)
+        .get(
+          `https://nutrirec-cra.herokuapp.com/user/${this.props.auth0.user.email}`
+        )
         .then((response) => {
           this.setState({ favArr: response.data.favorite });
         })

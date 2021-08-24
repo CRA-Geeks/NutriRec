@@ -24,7 +24,7 @@ class TagsModal extends Component {
 
     const config = {
       method: "put",
-      baseURL: `http://localhost:8080/user/${this.props.auth0.user.email}`,
+      baseURL: `https://nutrirec-cra.herokuapp.com/user/${this.props.auth0.user.email}`,
       data: {
         tags: array,
       },

@@ -31,7 +31,7 @@ export default class RecipeKey extends Component {
   }
   componentDidMount() {
     axios
-      .get(`http://localhost:8080/recipe?q=all`)
+      .get(`https://nutrirec-cra.herokuapp.com/recipe?q=all`)
       .then((res) => {
         this.setState({
           newRecipe: res.data.hits.map((item) => item.recipe.image),

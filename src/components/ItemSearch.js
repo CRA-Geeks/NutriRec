@@ -21,7 +21,7 @@ export default class ItemSearch extends Component {
   handleFoodInfo = (e) => {
     e.preventDefault();
 
-    let url = `http://localhost:8080/nuteri?food=${this.state.searchText}`;
+    let url = `https://nutrirec-cra.herokuapp.com/nuteri?food=${this.state.searchText}`;
     axios
       .get(url)
       .then((res) => {

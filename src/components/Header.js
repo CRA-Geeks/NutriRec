@@ -17,7 +17,7 @@ class Header extends Component {
     if (this.props.auth0.isAuthenticated) {
       const config = {
         method: "post",
-        baseURL: "http://localhost:8080/",
+        baseURL: "https://nutrirec-cra.herokuapp.com/",
         url: "/user/createUser",
         data: {
           email: this.props.auth0.user.email,
@@ -38,7 +38,9 @@ class Header extends Component {
   handleShowModal = () => {
     let checkboxes = document.getElementsByTagName("input");
     axios
-      .get(`http://localhost:8080/user/${this.props.auth0.user.email}`)
+      .get(
+        `https://nutrirec-cra.herokuapp.com/user/${this.props.auth0.user.email}`
+      )
       .then((response) => {
         for (let i = 0; i < checkboxes.length; i++) {
           if (response.data.tags.includes(checkboxes[i].value)) {

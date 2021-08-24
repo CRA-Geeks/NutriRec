@@ -27,7 +27,7 @@ class NewRecipes extends Component {
   }
   componentDidMount() {
     axios
-      .get(`http://localhost:8080/recipe?q=new`)
+      .get(`https://nutrirec-cra.herokuapp.com/recipe?q=new`)
       .then((res) => {
         this.setState({
           newRecipe: res.data.hits.map((item) => item.recipe.image),

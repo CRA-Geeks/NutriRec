@@ -14,7 +14,7 @@ export class FavList extends Component {
   }
   componentDidMount = () => {
     if (this.props.auth0.isAuthenticated) {
-      let url = `http://localhost:8080/user/${this.props.auth0.user.email}`;
+      let url = `https://nutrirec-cra.herokuapp.com/user/${this.props.auth0.user.email}`;
       axios
         .get(url)
         .then((res) => {
@@ -35,7 +35,7 @@ export class FavList extends Component {
         newArr.splice(i, 1);
         const config = {
           method: "put",
-          baseURL: `http://localhost:8080/addFiv/${this.props.auth0.user.email}`,
+          baseURL: `https://nutrirec-cra.herokuapp.com/addFiv/${this.props.auth0.user.email}`,
           data: {
             favorite: newArr,
           },
