@@ -11,7 +11,9 @@ import {
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import axios from "axios";
-export default class Recipe extends Component {
+import { withAuth0 } from "@auth0/auth0-react";
+
+class Recipe extends Component {
   constructor() {
     super();
     this.state = {
@@ -20,6 +22,7 @@ export default class Recipe extends Component {
       nextURL: "",
       prevURL: "",
       currentURL: "",
+      favArr: [],
     };
   }
 
@@ -31,6 +34,59 @@ export default class Recipe extends Component {
     });
   }
 
+
+  /////////////////////////////////part for fav list /////////////////////////////////////
+
+
+  addtofav(obj) {
+    //console.log(obj)
+
+    if (this.props.auth0.isAuthenticated) {
+      axios
+        .get(`http://localhost:8080/user/${this.props.auth0.user.email}`)
+        .then((response) => {
+          this.setState({ favArr: response.data.favorite });
+        }).then(() => {
+          // this.getUser();
+          let arr = this.state.favArr;
+          arr.push(obj)
+          this.setState({
+            favArr: arr
+          })
+        }).then(() => {
+          const config = {
+            method: "put",
+            baseURL: `http://localhost:8080/addFiv/${this.props.auth0.user.email}`,
+            data: {
+              favorite: this.state.favArr,
+            },
+          };
+
+          axios(config)
+            .then((res) => {
+              console.log(res.status);
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+          document.getElementById("myBtn").disabled = true;
+
+
+        })
+
+      console.log(this.state.favArr.length);
+
+
+    }
+
+
+  }
+
+  //////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+  //////////////////////////////////////part for get recipe by searching ///////////////////////////////
   recipeHandler(e) {
     e.preventDefault();
     axios
@@ -141,6 +197,9 @@ export default class Recipe extends Component {
                             Know More About Recipe
                           </Button>{" "}
                         </a>
+                        {this.props.auth0.isAuthenticated && (
+                          <Button onClick={() => this.addtofav(item.recipe)} id="myBtn" >Add to favlist</Button>
+                        )}
                       </Card.Body>
                     </Card>
                   </Col>
@@ -190,3 +249,5 @@ export default class Recipe extends Component {
     );
   }
 }
+
+export default withAuth0(Recipe);
