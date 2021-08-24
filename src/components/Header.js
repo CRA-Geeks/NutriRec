@@ -2,18 +2,17 @@ import React, { Component } from "react";
 // import HeaderTop from "./HeaderTop";
 import { Nav, Navbar, Container, Button } from "react-bootstrap";
 import { withAuth0 } from "@auth0/auth0-react";
-import "../styles/header.css";
+// import "../styles/header.css";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import TagsModal from "./TagsModal";
-
-
-
+import ItemSearch from "./ItemSearch";
 class Header extends Component {
   constructor(props) {
     super(props);
     this.state = {
       tagsModalOpen: false,
+      searchModalOpen: false,
     };
   }
   componentDidUpdate() {
@@ -63,6 +62,10 @@ class Header extends Component {
             show={this.state.tagsModalOpen}
             handleClose={this.handleClose}
           />
+          <ItemSearch
+            show={this.state.searchModalOpen}
+            handleClose={() => this.setState({ searchModalOpen: false })}
+          />
           <Navbar collapseOnSelect expand="lg" bg="light" variant="light">
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
 
@@ -80,7 +83,13 @@ class Header extends Component {
                     </Nav.Link>
                   </>
                 )}
-
+                <Nav.Link
+                  onClick={() => {
+                    this.setState({ searchModalOpen: true });
+                  }}
+                >
+                  Calcualte
+                </Nav.Link>
                 <Nav.Link as={Link} to="/about-us">
                   About
                 </Nav.Link>

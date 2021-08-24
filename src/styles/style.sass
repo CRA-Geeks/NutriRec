@@ -1,0 +1,83 @@
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&display=swap')
+    
+    
+    
+    
+header 
+    .navbar-nav 
+        width: 100%
+
+
+main 
+    .firstRow 
+        padding: 15px
+        width: 100%
+        display: flex
+        flex-direction: row
+        justify-content: space-between
+        align-items: center
+        @media screen and (max-width: 767px) 
+            flex-direction: column
+            gap: 10px
+        .firstParagraph
+            display: flex
+            font-family: 'Dancing Script', cursive
+            font-size: 28px
+            font-weight: 550
+            div 
+                display: grid
+    .img-responsive
+        cursor: pointer 
+        width: 100%
+        margin: 10px 0
+        border-radius: 15px
+        border: 1px solid #ccc
+    .imgAndText 
+        margin-bottom: 30px
+    .roundUp 
+        width: 100%
+        text-align: center
+        img 
+            width: 180px
+    .recipeItem 
+        // text-align: center
+        cursor: pointer
+        display: flex
+        width: 100%
+        flex-direction: row
+        justify-content: space-between
+        // gap: 150px
+        align-items: center
+        @media screen and (max-width: 767px) 
+            flex-direction: column
+            gap: 10px
+            border: 3px solid #ccc
+        // outline: 1px red solid
+        span
+            display: flex
+            justify-content: space-between
+            gap: 10px
+        &:hover
+            background: #b2cead
+
+footer
+    color: white
+    background: #000000
+    
+    display: flex
+    justify-content: center
+    align-items: center
+    flex-direction: column
+    p 
+        margin: 0
+        padding: 0
+        text-align: center
+    section
+        display: flex
+        justify-content: center
+        align-items: center
+        img 
+            // border: 1px white solid
+            // border-radius: 15px
+            width: 120px
+            height: 120px

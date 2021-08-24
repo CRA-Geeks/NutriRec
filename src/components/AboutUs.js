@@ -1,10 +1,12 @@
 import React, { Component } from "react";
+
+// import "./AboutUs.css";
+
 import "./AboutUs.css";
 import facebook from "../assets/icons/facebook.png";
 import instagram from "../assets/icons/instagram.png";
 import linkedin from "../assets/icons/linkedin.png";
 import Aboutus from "../assets/imgs/Aboutus.jpg"
-
 export class About extends Component {
   render() {
     return (

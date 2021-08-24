@@ -2,13 +2,11 @@ import React, { Component } from "react";
 import AboutUs from "./pages/AboutUs";
 import { Auth0Provider } from "@auth0/auth0-react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
-
-
-
 import Main from "./pages/Main";
 import Recipe from "./pages/Recipe";
-
 import { withAuth0 } from "@auth0/auth0-react";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "./styles/style.sass";
 import FavList from "./pages/FavList";
 class App extends Component {
   render() {

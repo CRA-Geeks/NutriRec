@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
+
 import { Form, FormControl, Container, Button, Navbar } from "react-bootstrap";
-import "../styles/HeaderTopStyle.css";
+// import "../styles/HeaderTopStyle.css";
 import facebook from "../assets/icons/facebook.png";
 import instagram from "../assets/icons/instagram.png";
 import pinterest from "../assets/icons/pinterest.png";

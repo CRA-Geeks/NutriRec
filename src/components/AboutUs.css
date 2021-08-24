@@ -1,12 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
-.head {
-  font-family: "Caveat", cursive;
-}
 
-.container .aboutUsIcons a {
-  margin-left: 1px;
-  background-color: inherit;
-}
 
 .container .aboutUsIcons a:hover {
   text-decoration: none;
@@ -35,3 +27,4 @@ div.show-image nav.aboutUsIcons {
   bottom: 0;
   left: 0;
 }
+

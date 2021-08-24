@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Container, Row, Col } from "react-bootstrap";
-import "../styles/RoundUb.css";
+// import "../styles/RoundUb.css";
 import { BsArrowRight } from "react-icons/bs";
 
 export default class RoundUb extends Component {

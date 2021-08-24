@@ -7,8 +7,8 @@ import {
   FormControl,
   Container,
 } from "react-bootstrap";
-import "bootstrap/dist/css/bootstrap.min.css";
-import "../styles/newRecipes.css";
+
+// import "../styles/newRecipes.css";
 import { FaLongArrowAltRight } from "react-icons/fa";
 import axios from "axios";
 class NewRecipes extends Component {
@@ -25,6 +25,8 @@ class NewRecipes extends Component {
       firstName: "",
       secondName: "",
       thirdName: "",
+      mixImgAndText: [],
+      links: [],
     };
   }
   getRandomNumber(min, max) {
@@ -36,9 +38,12 @@ class NewRecipes extends Component {
     axios
       .get(`http://localhost:8080/recipe?q=new`)
       .then((res) => {
+        // console.log(res.data.hits[0].recipe.url);
         this.setState({
           newRecipe: res.data.hits.map((item) => item.recipe.image),
+          links: res.data.hits.map((item) => item.recipe.url),
         });
+        console.log(this.state.links);
         do {
           this.setState({
             firstIndex: this.getRandomNumber(
@@ -59,13 +64,31 @@ class NewRecipes extends Component {
           this.state.firstIndex === this.state.thirdIndex ||
           this.state.secondIndex === this.state.thirdIndex
         );
+        // console.log(this.state.newRecipe);
         this.setState({
-          firstImage: this.state.newRecipe[this.state.firstIndex],
-          secondImage: this.state.newRecipe[this.state.secondIndex],
-          thirdImage: this.state.newRecipe[this.state.thirdIndex],
-          firstName: res.data.hits[this.state.firstIndex].recipe.label,
-          secondName: res.data.hits[this.state.secondIndex].recipe.label,
-          thirdName: res.data.hits[this.state.thirdIndex].recipe.label,
+          // firstImage: this.state.newRecipe[this.state.firstIndex],
+          // secondImage: this.state.newRecipe[this.state.secondIndex],
+          // thirdImage: this.state.newRecipe[this.state.thirdIndex],
+          // firstName: res.data.hits[this.state.firstIndex].recipe.label,
+          // secondName: res.data.hits[this.state.secondIndex].recipe.label,
+          // thirdName: res.data.hits[this.state.thirdIndex].recipe.label,
+          mixImgAndText: [
+            {
+              image: this.state.newRecipe[this.state.firstIndex],
+              text: res.data.hits[this.state.firstIndex].recipe.label,
+              link: res.data.hits[this.state.firstIndex].recipe.url,
+            },
+            {
+              image: this.state.newRecipe[this.state.secondIndex],
+              text: res.data.hits[this.state.secondIndex].recipe.label,
+              link: res.data.hits[this.state.secondIndex].recipe.url,
+            },
+            {
+              image: this.state.newRecipe[this.state.thirdIndex],
+              text: res.data.hits[this.state.thirdIndex].recipe.label,
+              link: res.data.hits[this.state.thirdIndex].recipe.url,
+            },
+          ],
         });
       })
       .catch((e) => {
@@ -79,115 +102,35 @@ class NewRecipes extends Component {
         <Row className="mb-3">
           <Col className="firstRow">
             <div className="firstParagraph">
-              <h1>CRA</h1>
+              {/* <h1>CRA</h1> */}
               <div>
                 <span>Simple Recipes That</span>
                 <span> Make You Feel Good</span>
               </div>
             </div>
             <h2>NEW RECIPES</h2>
-            <p className="paragraphShow">
+            {/* <p className="paragraphShow">
               show me every things <FaLongArrowAltRight />{" "}
-            </p>
+            </p> */}
           </Col>
         </Row>
 
-        <Row className="secondeRow">
-          <Col md={6} lg={4} sm={12}>
-            <div className="imageFood">
-              <Image src={this.state.firstImage} rounded />
-              <div className="circleLinks">
-                <a href="">GF</a>
-                <a href="" className="secondLink">
-                  VG
-                </a>
-                <a href="" className="thirdLink">
-                  V
-                </a>
-                <a href="" className="forthLink">
-                  DF
-                </a>
-                <a href="" className="fifthLink">
-                  NS
-                </a>
+        <Row>
+          {this.state.mixImgAndText.map((item, index) => (
+            <Col key={index} className="imgAndText" lg={4} md={12}>
+              <div className="imgAndText">
+                <Image
+                  src={item.image}
+                  className="img-responsive"
+                  alt={item.text}
+                  onClick={() => window.open(item.link, "_blank")}
+                />
+                <div className="imgAndText-text">
+                  <h4>{item.text}</h4>
+                </div>
               </div>
-              <h3>{this.state.firstName}</h3>
-            </div>
-          </Col>
-          <Col md={6} lg={4} sm={12}>
-            <div className="imageFood">
-              <Image src={this.state.secondImage} rounded />
-              <div className="circleLinks">
-                <a href="">GF</a>
-                <a href="" className="secondLink">
-                  VG
-                </a>
-                <a href="" className="thirdLink">
-                  V
-                </a>
-                <a href="" className="forthLink">
-                  DF
-                </a>
-                <a href="" className="fifthLink">
-                  NS
-                </a>
-              </div>
-              <h3>{this.state.secondName}</h3>
-            </div>
-          </Col>
-          <Col md={6} lg={4} sm={12}>
-            <div className="imageFood">
-              <Image src={this.state.thirdImage} rounded />
-              <div className="circleLinks">
-                <a href="">GF</a>
-                <a href="" className="secondLink">
-                  VG
-                </a>
-                <a href="" className="thirdLink">
-                  V
-                </a>
-                <a href="" className="forthLink">
-                  DF
-                </a>
-                <a href="" className="fifthLink">
-                  NS
-                </a>
-              </div>
-              <h3>{this.state.thirdName}</h3>
-            </div>
-          </Col>
-        </Row>
-
-        <Row className="thirdRow">
-          <p className="arrow">
-            show me every things <FaLongArrowAltRight />{" "}
-          </p>
-        </Row>
-
-        <Row className="lastRow">
-          <Col md={6} lg={3} sm={12}>
-            <h2>*Want more deliciousness?</h2>
-          </Col>
-          <Col md={6} lg={6} sm={12}>
-            {" "}
-            <p>
-              Subscribe here and we’ll send you an email as new recipes are
-              published AND our fan favorites ebook!
-            </p>
-          </Col>
-          <Col md={6} lg={3} sm={12}>
-            {" "}
-            <InputGroup size="lg" className="inputGroup">
-              <FormControl
-                aria-label="Large"
-                aria-describedby="inputGroup-sizing-sm"
-                placeholder="EMAIL ADDRESS ....."
-              />
-              <InputGroup.Text id="inputGroup-sizing-lg">
-                Submit
-              </InputGroup.Text>
-            </InputGroup>
-          </Col>
+            </Col>
+          ))}
         </Row>
         <hr />
       </Container>
