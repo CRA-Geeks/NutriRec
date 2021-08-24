@@ -18,6 +18,7 @@ class Recipe extends Component {
     super();
     this.state = {
       recipeName: "",
+      dataRecipe: [],
       showResult: false,
       nextURL: "",
       prevURL: "",
@@ -127,6 +128,7 @@ class Recipe extends Component {
   handelBoth(health, place) {
     let newArray = this.state.recipes.filter(
       (item) =>
+
         (item.recipe.healthLabels.includes(health) || health === "0") &&
         (item.recipe.cuisineType.includes(place) || place === "0")
     );
@@ -135,7 +137,9 @@ class Recipe extends Component {
       health: health,
       place: place,
     });
+
   }
+
 
   render() {
     return (
@@ -217,9 +221,9 @@ class Recipe extends Component {
               this.state.dataRecipe.map((item) => {
                 return (
                   <Col lg={3} md={6} sm={12} className="recipeColCard">
-                    <Card className="recipeCard">
+                    <Card className="recipeCard" style={{marginTop:'20px'}}>
                       <Card.Img variant="top" src={item.recipe.image} />
-                      <Card.Body>
+                      <Card.Body style={{overflow:'auto',height:'240px'}}>
                         <Card.Title className="titleText">
                           <pre>{item.recipe.label}</pre>
                         </Card.Title>
@@ -238,6 +242,20 @@ class Recipe extends Component {
                                 {Math.floor(item.recipe.calories)}
                               </span>
                             </p>
+                            {item.recipe.totalTime===0?<p className="mainP">
+                              <span className="textItem">totalTime:</span>{" "}
+                              <span className="textValue">
+                                Not available
+                              </span>
+                            </p>: <p className="mainP">
+                              <span className="textItem">totalTime:</span>{" "}
+                              <span className="textValue">
+                                {Math.floor(item.recipe.totalTime)} Min
+                              </span>
+                            </p>}
+
+
+
                           </div>
 
                           {item.recipe.healthLabels
@@ -259,11 +277,12 @@ class Recipe extends Component {
                             <p className="notHalal">Not Halal</p>
                           )}
                         </Card.Text>
-                        <a href={item.recipe.url}>
-                          <Button className="buttonCard" variant="info">
-                            Know More About Recipe
-                          </Button>
-                        </a>
+                
+                      </Card.Body>
+                      <Card.Footer style={{display:'flex',gap:'5px'}} >
+                      <Button href={item.recipe.url} className="buttonCard"
+                              variant="success">Know More About Recipe</Button> {' '}
+                       
                         {this.props.auth0.isAuthenticated && (
                           <Button
                             onClick={() => this.addtofav(item.recipe)}
@@ -272,7 +291,8 @@ class Recipe extends Component {
                             Add to favlist
                           </Button>
                         )}
-                      </Card.Body>
+                       
+                        </Card.Footer>
                     </Card>
                   </Col>
                 );
