@@ -11,8 +11,9 @@ import {
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import axios from "axios";
-import "../styles/recipe.css";
-export default class Recipe extends Component {
+import { withAuth0 } from "@auth0/auth0-react";
+
+class Recipe extends Component {
   constructor() {
     super();
     this.state = {
@@ -25,8 +26,9 @@ export default class Recipe extends Component {
       recipes: [],
       heathRecipes: [],
       placeRecipes: [],
-      health:'0',
-      place:'0',
+      health: "0",
+      place: "0",
+      favArr: [],
     };
   }
 
@@ -38,6 +40,51 @@ export default class Recipe extends Component {
     });
   }
 
+  /////////////////////////////////part for fav list /////////////////////////////////////
+
+  addtofav(obj) {
+    //console.log(obj)
+
+    if (this.props.auth0.isAuthenticated) {
+      axios
+        .get(`http://localhost:8080/user/${this.props.auth0.user.email}`)
+        .then((response) => {
+          this.setState({ favArr: response.data.favorite });
+        })
+        .then(() => {
+          // this.getUser();
+          let arr = this.state.favArr;
+          arr.push(obj);
+          this.setState({
+            favArr: arr,
+          });
+        })
+        .then(() => {
+          const config = {
+            method: "put",
+            baseURL: `http://localhost:8080/addFiv/${this.props.auth0.user.email}`,
+            data: {
+              favorite: this.state.favArr,
+            },
+          };
+
+          axios(config)
+            .then((res) => {
+              console.log(res.status);
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+          document.getElementById("myBtn").disabled = true;
+        });
+
+      console.log(this.state.favArr.length);
+    }
+  }
+
+  //////////////////////////////////////////////////////////////////////////////////////////
+
+  //////////////////////////////////////part for get recipe by searching ///////////////////////////////
   recipeHandler(e) {
     e.preventDefault();
     axios
@@ -77,83 +124,40 @@ export default class Recipe extends Component {
       });
   }
 
-  handelBoth (health, place) {
-    let newArray = this.state.recipes.filter((item) =>
-      (
-        item.recipe.healthLabels.includes(health) || health==='0'
-        
-      )&&(item.recipe.cuisineType.includes(place)||place==='0')
-
-    )
+  handelBoth(health, place) {
+    let newArray = this.state.recipes.filter(
+      (item) =>
+        (item.recipe.healthLabels.includes(health) || health === "0") &&
+        (item.recipe.cuisineType.includes(place) || place === "0")
+    );
     this.setState({
-      dataRecipe:newArray,
-      health:health,
-      place:place,
-    })
-  };
-
-  // changeHealth(e) {
-  //   if (this.state.placeRecipes.length > 0) {
-  //     let placeArray = this.state.placeRecipes.filter((item) =>
-  //       item.recipe.healthLabels.includes(e.target.value)
-  //     );
-
-  //     this.setState({
-  //       dataRecipe: placeArray,
-  //       heathRecipes: placeArray,
-  //     });
-  //   } else {
-  //     let newArray = this.state.recipes.filter(
-  //       (item) =>
-  //         item.recipe.healthLabels.includes(e.target.value) ||
-  //         e.target.value === "0"
-  //     );
-
-  //     console.log(newArray);
-  //     this.setState({
-  //       dataRecipe: newArray,
-  //       heathRecipes: newArray,
-  //     });
-  //   }
-  // }
-  // changeCuisineType(e) {
-  //   if (this.state.heathRecipes.length > 0) {
-  //     let filterArray = this.state.heathRecipes.filter((item) =>
-  //       item.recipe.cuisineType.includes(e.target.value)
-  //     );
-
-  //     this.setState({
-  //       dataRecipe: filterArray,
-  //       placeRecipes: filterArray,
-  //     });
-  //   } else {
-  //     let newArray = this.state.recipes.filter(
-  //       (item) =>
-  //         item.recipe.cuisineType.includes(e.target.value) ||
-  //         e.target.value === "0"
-  //     );
-
-  //     console.log(newArray);
-  //     this.setState({
-  //       dataRecipe: newArray,
-  //       placeRecipes: newArray,
-  //     });
-  //   }
-  // }
+      dataRecipe: newArray,
+      health: health,
+      place: place,
+    });
+  }
 
   render() {
     return (
       <Container>
         <Header />
         <main className="recipeMain">
-          <Form className="recipeForm" onSubmit={(e) => this.recipeHandler(e)}>
+          {/* <Form className="recipeForm" onSubmit={(e) => this.recipeHandler(e)}> */}
+          {/* </main> */}
+
+          <Form
+            onSubmit={(e) => this.recipeHandler(e)}
+            style={{ margin: "2rem 0" }}
+          >
             <Row>
               <Col lg={3}>
                 {this.state.showResult && (
                   <Form.Select
                     aria-label="Default select example"
                     size="lg"
-                    onChange={(e) => this.handelBoth(e.target.value,this.state.place)}
+                    onChange={(e) =>
+                      this.handelBoth(e.target.value, this.state.place)
+                    }
                   >
                     <option value="0">All Recipes</option>
                     <option value="Pork-Free">Pork Free</option>
@@ -189,7 +193,9 @@ export default class Recipe extends Component {
                   <Form.Select
                     aria-label="Default select example"
                     size="lg"
-                    onChange={(e) => this.handelBoth(this.state.health,e.target.value)}
+                    onChange={(e) =>
+                      this.handelBoth(this.state.health, e.target.value)
+                    }
                   >
                     <option value="0">All Recipes</option>
                     <option value="american">american</option>
@@ -258,6 +264,14 @@ export default class Recipe extends Component {
                             Know More About Recipe
                           </Button>
                         </a>
+                        {this.props.auth0.isAuthenticated && (
+                          <Button
+                            onClick={() => this.addtofav(item.recipe)}
+                            id="myBtn"
+                          >
+                            Add to favlist
+                          </Button>
+                        )}
                       </Card.Body>
                     </Card>
                   </Col>
@@ -307,3 +321,5 @@ export default class Recipe extends Component {
     );
   }
 }
+
+export default withAuth0(Recipe);

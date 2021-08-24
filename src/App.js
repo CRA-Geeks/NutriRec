@@ -3,10 +3,13 @@ import AboutUs from "./pages/AboutUs";
 import { Auth0Provider } from "@auth0/auth0-react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 
+
+
 import Main from "./pages/Main";
 import Recipe from "./pages/Recipe";
 
 import { withAuth0 } from "@auth0/auth0-react";
+import FavList from "./pages/FavList";
 class App extends Component {
   render() {
     return (
@@ -21,8 +24,13 @@ class App extends Component {
             <Route exact path="/">
               <Main />
             </Route>
+          
+            
             <Route exact path="/recipe">
               <Recipe />
+            </Route>
+            <Route exact path="/favlist">
+              <FavList />
             </Route>
 
             <Route path="/about-us" exact>
